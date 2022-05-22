@@ -25,10 +25,3 @@ elif grep -q ^ID_LIKE=debian$ /etc/os-release; then
 		gzip cpio bzip2 liblz4-dev liblz4-tool liblzma-dev xz-utils lzma lzop \
 		libxml2 libfdt-dev python3-dev aria2 detox brotli zstd libzstd-dev openssl xxd
 fi
-
-if [ $? -eq 0 ]; then
-	wget -q -O get-pip.py https://bootstrap.pypa.io/get-pip.py
-	python3 get-pip.py --upgrade --disable-pip-version-check --no-cache-dir
-	rm -f get-pip.py
-	pip3 install future requests humanize clint backports.lzma lz4 zstandard protobuf pycryptodome docopt
-fi
