@@ -91,7 +91,7 @@ for tool_slug in "${EXTERNAL_TOOLS[@]}"; do
 done
 
 # Always Use update_metadata_pb2.py from Android's update_engine Git Repository
-curl -sL https://android.googlesource.com/platform/system/update_engine/+/refs/heads/master/scripts/update_payload/update_metadata_pb2.py?format=TEXT | base64 --decode > "${UTILSDIR}"/ota_payload_extractor/update_metadata_pb2.py
+curl -sL https://android.googlesource.com/platform/system/update_engine/+/refs/heads/master/scripts/update_metadata_pb2.py?format=TEXT | base64 --decode > "${UTILSDIR}"/ota_payload_extractor/update_metadata_pb2.py
 
 ## See README.md File For Program Credits
 # Set Utility Program Alias
@@ -555,6 +555,9 @@ elif 7z l -ba "${FILEPATH}" | grep tar.md5 | gawk '{print $NF}' | grep -q AP_ 2>
 		lz4 -dc "${i}" > "${i/.lz4/}" || exit 1
 		rm -fv "${i}" || exit 1
 		printf "Extracted %s\n" "${i}"
+	done
+	for samsung_ext4_img_files in $(find -maxdepth 1 -type f -name \*.ext4 -printf '%P\n'); do
+		mv -v $samsung_ext4_img_files "${samsung_ext4_img_files%%.ext4}"
 	done
 	if [[ -f super.img ]]; then
 		printf "Creating super.img.raw ...\n"
